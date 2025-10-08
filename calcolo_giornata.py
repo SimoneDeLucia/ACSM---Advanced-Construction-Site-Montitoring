@@ -5,6 +5,7 @@ import json
 import sys
 import os
 import csv
+import shutil
 
 RETI = {
     "THU": {"network_id": "L_575897802350018094", "weatherstation_id": 266643},
@@ -162,6 +163,24 @@ def calcolo_giornata_csv():
                 writer.writerow(row)
 
         print(f"CSV giornata creato: {csv_path}")
+        cancella_snapshot("camera_snapshot")
+
+def cancella_snapshot(dir_name):
+    abs_dir = os.path.abspath(dir_name)
+    cwd = os.path.abspath(os.getcwd())
+
+    if not os.path.exists(abs_dir):
+        print(f"Directory not found: {abs_dir}")
+    else:
+        # safety: only remove if the directory is inside the current working directory
+        if os.path.commonpath([cwd, abs_dir]) != cwd:
+            print(f"Refusing to delete directory outside the current working directory: {abs_dir}")
+        else:
+            try:
+                shutil.rmtree(abs_dir)
+                print(f"Deleted directory and all contents: {abs_dir}")
+            except Exception as e:
+                print(f"Error while deleting {abs_dir}: {e}")
 
 if __name__ == "__main__":
     calcolo_giornata_csv()
