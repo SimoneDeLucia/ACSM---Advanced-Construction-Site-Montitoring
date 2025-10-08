@@ -1,0 +1,29 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mqtt_broker_merakiabitarein
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
+    stdin_open: true
+    tty: true
+    networks:
+      - cloudflare_tunnel_network   
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - cloudflare_tunnel_network   
+
+networks:
+  cloudflare_tunnel_network:
+    driver: bridge

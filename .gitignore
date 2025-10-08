@@ -1,0 +1,12 @@
+*.log
+logs/
+credentials.py
+.env
+__pycache__/
+*.jpg
+camera_snapshot*
+bogus.py
+desktop.ini
+dati_giornata/
+*.db
+pk.pem
