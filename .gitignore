@@ -1,4 +1,3 @@
-*.log
 logs/
 credentials.py
 .env
