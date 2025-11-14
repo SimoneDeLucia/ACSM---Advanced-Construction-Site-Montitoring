@@ -1,4 +1,4 @@
-logs/
+*.log
 credentials.py
 .env
 __pycache__/
