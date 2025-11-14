@@ -64,6 +64,7 @@ class sensors:
     def __init__(self):
         
         #Inizializzazione dashboard, per ottenere ID organizzazione, Rete e seriali
+        os.makedirs('logs', exist_ok=True)
         self.dashboard = meraki.DashboardAPI(api_key=self.API_KEY_Meraki, output_log=True, print_console=True, log_path='logs/')
         self._init_organization()
         self._process_networks()
